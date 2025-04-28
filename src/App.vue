@@ -19,7 +19,6 @@ export default {
   methods: {
     pullData() {
       fetch("/gigacorp.csv")
-        //fetch("/minicorp.csv")
         .then((response) => {
           if (!response.ok) {
             throw new Error("File does not exist!");
@@ -51,7 +50,7 @@ export default {
       const nameRegex = /name=([^&]*)/;
       const match = afterQuestionMark.match(nameRegex);
 
-      if (!match) return s; //
+      if (!match) return s;
 
       const newAfterQuestionMark = afterQuestionMark.replace(
         nameRegex,
@@ -67,7 +66,7 @@ export default {
         let individualCost = 0;
         let recursiveChildren = 0;
 
-        // Only process children's costsf
+        // Only process children's costs
         if (node.children) {
           node.children.forEach((child) => {
             if (child.children && child.children.length > 0) {
@@ -91,6 +90,8 @@ export default {
           : 0;
         node.data.totalCost = managerCost + individualCost;
         node.data.recursiveChildren = recursiveChildren;
+
+        // Correct link for photo src
         let nameArray = node.data.Name.split(" ");
         let shortenedName = nameArray[0].charAt(0) + nameArray[1].charAt(0);
         node.data.Photo = this.replaceNameAfterQuestionMark(
@@ -118,23 +119,13 @@ export default {
       Organization Tree
     </h1>
     <div v-if="rootNode">
-      <TreeNode :node="rootNode" />
+      <TreeNode
+        :node="rootNode"
+        class="tree-node"
+        :data-key="rootNode.data['Employee Id']"
+        :key="rootNode.data['Employee Id']"
+      />
     </div>
     <div v-else>No data available.</div>
   </div>
 </template>
-
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
-</style>
