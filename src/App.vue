@@ -126,6 +126,6 @@ export default {
         :key="rootNode.data['Employee Id']"
       />
     </div>
-    <div v-else>No data available.</div>
+    <div class="text-black" v-else>Loading...</div>
   </div>
 </template>
